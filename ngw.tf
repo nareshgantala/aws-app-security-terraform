@@ -1,6 +1,6 @@
 resource "aws_nat_gateway" "nat_gw" {
   allocation_id = aws_eip.eip.id
-  subnet_id     = aws_subnet.public_subnet.id
+  subnet_id     = aws_subnet.app_public_subnet.id
 
   tags = {
     Name = "aws-app-security-terraform-nat"

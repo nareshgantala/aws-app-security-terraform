@@ -20,17 +20,34 @@ resource "aws_security_group" "alb_sg" {
 
 
 resource "aws_vpc_security_group_ingress_rule" "alb-ec2-ingress" {
-  security_group_id = aws_security_group.ec2_sg.id
+  security_group_id            = aws_security_group.ec2_sg.id
   referenced_security_group_id = aws_security_group.alb_sg.id
-  from_port         = 8080
-  ip_protocol       = "tcp"
-  to_port           = 8080
+  from_port                    = 8080
+  ip_protocol                  = "tcp"
+  to_port                      = 8080
 }
 
-resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv6" {
-  security_group_id = aws_security_group.allow_tls.id
-  cidr_ipv6         = aws_vpc.main.ipv6_cidr_block
-  from_port         = 443
+resource "aws_vpc_security_group_ingress_rule" "ssh-ingress" {
+  security_group_id = aws_security_group.ec2_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 22
   ip_protocol       = "tcp"
-  to_port           = 443
+  to_port           = 22
 }
+
+resource "aws_vpc_security_group_ingress_rule" "alb-public-ingress" {
+  security_group_id = aws_security_group.alb_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 80
+  ip_protocol       = "tcp"
+  to_port           = 80
+}
+
+resource "aws_vpc_security_group_egress_rule" "alb-egress" {
+  security_group_id            = aws_security_group.alb_sg.id
+  referenced_security_group_id = aws_security_group.ec2_sg.id
+  from_port                    = 8080
+  ip_protocol                  = "tcp"
+  to_port                      = 8080
+}
+

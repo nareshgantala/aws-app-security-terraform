@@ -43,6 +43,7 @@ resource "aws_vpc_security_group_ingress_rule" "alb-public-ingress" {
   to_port           = 80
 }
 
+
 resource "aws_vpc_security_group_egress_rule" "alb-egress" {
   security_group_id            = aws_security_group.alb_sg.id
   referenced_security_group_id = aws_security_group.ec2_sg.id

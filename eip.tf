@@ -3,4 +3,5 @@ resource "aws_eip" "eip" {
   tags = {
     "Name" = "aws-app-security-terraform-eip"
   }
+  depends_on = [aws_internet_gateway.gw]
 }

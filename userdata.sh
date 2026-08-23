@@ -18,7 +18,7 @@ AWS_REGION=$(curl -s -S -H "X-aws-ec2-metadata-token: $IMDS_TOKEN" "http://169.2
 INSTANCE_ID=$(curl -s -S -H "X-aws-ec2-metadata-token: $IMDS_TOKEN" "http://169.254.169.254/latest/meta-data/instance-id")
 
 export AWS_DEFAULT_REGION="$AWS_REGION"
-SECRET_ID="production/app/db-credentials" # Change to your Secrets Manager secret name or pass via templatefile
+SECRET_ID="my-predefined-db-secret" # Change to your Secrets Manager secret name or pass via templatefile
 
 echo "[INFO] Running on Instance: ${INSTANCE_ID} in Region: ${AWS_REGION}"
 
